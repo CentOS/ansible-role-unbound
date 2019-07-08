@@ -1,1 +1,63 @@
 # Defaults tasks for role unbound
+
+- name: Ensuring unbound pkg is installed
+  yum:
+    name: unbound
+    state: latest
+
+- name: Configuring default unbound
+  template:
+    src: unbound.conf.j2
+    dest: /etc/unbound/unbound.conf
+    #validate: 'unbound-checkconf %s'
+  notify: restart_unbound
+
+- name: Configuring local cache overrides
+  template: 
+    src: 01_rpz_cache.conf.j2 
+    dest: /etc/unbound/conf.d/01_rpz_cache.conf
+  when: unbound_cache_override is defined
+  notify: restart_unbound
+  tags:
+    - template
+
+- name: Configuring cache for local zone/group
+  template: 
+    src: 02_localzone_cache.conf.j2 
+    dest: /etc/unbound/conf.d/02_localzone_cache.conf
+  when: unbound_local_groups is defined  
+  notify: restart_unbound
+  tags:
+    - template
+
+- name: Configuring forwarder if needed
+  template: 
+    src: 99_forwarders.conf.j2 
+    dest: /etc/unbound/conf.d/99_forwarders.conf
+  when: unbound_use_forwarder
+  notify: restart_unbound
+
+- name: Ensuring unbound is started and enabled
+  service:
+    name: unbound
+    state: started
+    enabled: True
+
+- name: Opening up dns ports - ipv4
+  template:
+    src: iptables-policy-dns.conf.j2
+    dest: /etc/sysconfig/iptables.d/01-input-service-policy-unbound-dns
+  notify:
+    - rebuild_iptables
+  tags:
+    - iptables
+
+- name: Opening up dns ports - ipv6
+  template:
+    src: ip6tables-policy-dns.conf.j2
+    dest: /etc/sysconfig/ip6tables.d/01-input-service-policy-unbound-dns
+  notify:
+    - rebuild_ip6tables
+  tags:
+    - iptables
+    

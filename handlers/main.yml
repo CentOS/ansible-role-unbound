@@ -1,1 +1,6 @@
 # Defaults handlers for role unbound
+- name: restart_unbound
+  service: 
+    name: unbound 
+    state: restarted 
+

@@ -1,1 +1,3 @@
 # Defaults meta for role unbound
+dependencies:
+  - { role: baseline }

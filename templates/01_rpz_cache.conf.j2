@@ -1,0 +1,10 @@
+# This file is managed by Ansible - Don't edit by hand !
+# Purposes : load a RPZ (Response Policy Zone) in unbound local cache
+# So you can redirect particular records to specific IP while 
+# other records will be resolved through authoritative nameservers
+
+{% for item in unbound_cache_override %}
+local-data: "{{ item.host }}. IN A {{ item.ip }}"
+local-data-ptr: "{{ item.ip }} {{ item.host}}." 
+{% endfor %}
+

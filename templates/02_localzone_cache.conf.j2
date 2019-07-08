@@ -1,0 +1,13 @@
+# This file is managed by Ansible - Don't edit by hand !
+# Template searches for ip variable for hosts from defined groups 
+# see default/main.yml for explanations
+
+{% for group in unbound_local_groups%}
+# Parsing inventory group {{ group }}
+{% for host in groups[group] %}
+{% if hostvars[host].ip is defined %}
+local-data: "{{ host }}. IN A {{ hostvars[host].ip }}"
+local-data-ptr: "{{ hostvars[host].ip }} {{host}}." 
+{% endif %}
+{% endfor %}
+{% endfor %}

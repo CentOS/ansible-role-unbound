@@ -1,0 +1,6 @@
+forward-zone:
+        name: "."
+        {% for forwarder in unbound_forwarders -%}
+        forward-addr: {{ forwarder }}
+        {% endfor -%}
+
