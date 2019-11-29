@@ -11,6 +11,8 @@
     dest: /etc/unbound/unbound.conf
     #validate: 'unbound-checkconf %s'
   notify: restart_unbound
+  tags:
+    - config
 
 - name: Configuring local cache overrides
   template: 
@@ -20,6 +22,7 @@
   notify: restart_unbound
   tags:
     - template
+    - config
 
 - name: Configuring cache for local zone/group
   template: 
@@ -29,6 +32,7 @@
   notify: restart_unbound
   tags:
     - template
+    - config 
 
 - name: Configuring forwarder if needed
   template: 
@@ -36,6 +40,8 @@
     dest: /etc/unbound/conf.d/99_forwarders.conf
   when: unbound_use_forwarder
   notify: restart_unbound
+  tags:
+    - config
 
 - name: Ensuring unbound is started and enabled
   service:

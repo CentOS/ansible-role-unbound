@@ -11,6 +11,16 @@ server:
         {% for acl in unbound_acl_ipv6 -%}
 	access-control: {{ acl }} allow
         {% endfor -%}
+	{% if unbound_acl_groups is defined -%}
+	{% for group in unbound_acl_groups -%}
+	{% for host in groups[group] -%}
+	{% if hostvars[host].ip is defined -%}
+	access-control: {{ hostvars[host].ip }} allow
+	{% endif -%}
+	{% endfor -%}
+	{% endfor -%}
+	{% endif -%}
+
 	cache-max-ttl: {{ unbound_cache_max_ttl }}
         cache-min-ttl: {{ unbound_cache_min_ttl }}
         username: "unbound"

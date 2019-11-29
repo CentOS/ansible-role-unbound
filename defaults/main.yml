@@ -3,9 +3,17 @@
 # Access control, which hosts/subnets are authorized to use unbound as resolver
 unbound_acl_ipv4: 
   - 127.0.0.1/32  # localhost, change to your needs
-  - 192.168.0.0/24
 unbound_acl_ipv6: 
   - ::1 # localhost, ipv6 loopback
+
+# We can also instead parse inventory for hostvars/ip
+# Host without ip: variable will just be ignored
+# You can add multiple groups (list)
+# Skipped if undefined (as default here)
+#unbound_acl_groups:
+#  - dc1
+#  - dc1-vlan200
+
 
 # Default TTL for cache
 unbound_cache_max_ttl: 14400
@@ -13,9 +21,9 @@ unbound_cache_min_ttl: 60
 
 # RPZ/Local override records in unbound cache
 # If that list isn't defined, task will be skipped
-unbound_cache_override:
-  - host: mirror.centos.org
-    ip: 192.168.1.1
+#unbound_cache_override:
+#  - host: mirror.centos.org
+#    ip: 192.168.1.1
 
 # Local zone in cache
 # We can also parse specific inventory  groups and assuming that we have the "ip" variable set for those hosts,
