@@ -5,6 +5,7 @@ server:
         # The listen interfaces are not changed on reload, only on restart.
         interface: 0.0.0.0
         interface: ::0
+        interface-automatic: yes
         {% for acl in unbound_acl_ipv4 -%}
 	access-control: {{ acl }} allow
         {% endfor -%} 
