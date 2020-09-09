@@ -24,6 +24,7 @@ unbound_cache_min_ttl: 60
 #unbound_cache_override:
 #  - host: mirror.centos.org
 #    ip: 192.168.1.1
+unbound_cache_override: []
 
 # Do we also want to have wildcard/redirect ?
 # Useful to redirect a sub-zone to IP, like for openshift
@@ -31,11 +32,13 @@ unbound_cache_min_ttl: 60
 #unbound_cache_redirects:
 #  - zone: apps.openshift.centos.org
 #    ip: 192.168.2.2
+unbound_cache_redirects: []
 
 # Catch all , in case
 # just strings that will be declared, useful for srv records, etc
 #unbound_cache_other_records:
 #  - _ectd-server-ssl._tcp.openshift.centos.org 180 IN SRV 0 10 2380 etcd-0.openshift.centos.org.
+unbound_cache_other_records: []
 
 # Local zone in cache
 # We can also parse specific inventory  groups and assuming that we have the "ip" variable set for those hosts,
