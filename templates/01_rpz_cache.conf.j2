@@ -3,6 +3,16 @@
 # So you can redirect particular records to specific IP while 
 # other records will be resolved through authoritative nameservers
 
+{% for item in unbound_cache_redirects %}
+local-zone: "{{ item.zone }}" redirect
+local-data: "{{ item.zone }}. IN A {{ item.ip }}"
+local-data-ptr: "{{ item.ip }} {{ item.zone}}." 
+{% endfor %}
+
+{% for item in unbound_cache_other_records %}
+local-data: "{{ item }}"
+{% endfor %}
+
 {% for item in unbound_cache_override %}
 local-data: "{{ item.host }}. IN A {{ item.ip }}"
 local-data-ptr: "{{ item.ip }} {{ item.host}}." 
