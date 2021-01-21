@@ -1,6 +1,22 @@
+{% if unbound_use_forwarder %}
+# Forwarding all to other resolvers
 forward-zone:
         name: "."
         {% for forwarder in unbound_forwarders -%}
         forward-addr: {{ forwarder }}
         {% endfor -%}
+{% endif %}
+
+{% if unbound_forward_zones %}
+# Forwarding some specific zones to specific forwarders
+{% for zone in unbound_forward_zones_list %}
+forward-zone:
+				name: "{{ zone.name }}"
+        {% for ip in zone.addresses -%}
+				forward-addr: {{ ip }}
+				{% endfor -%}
+{% endfor %}
+{% endif %}
+
+
 

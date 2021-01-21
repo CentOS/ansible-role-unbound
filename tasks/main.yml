@@ -42,7 +42,7 @@
     src: 99_forwarders.conf.j2 
     dest: /etc/unbound/conf.d/99_forwarders.conf
     mode: 0644
-  when: unbound_use_forwarder
+  when: unbound_use_forwarder or unbound_forward_zones
   notify: restart_unbound
   tags:
     - config

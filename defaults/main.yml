@@ -56,3 +56,11 @@ unbound_forwarders:
   - 8.8.8.8
   - 9.9.9.9
 
+# Forwarding specific zone to specific forwarder[s]
+#unbound_forward_zones_list:
+#  - name: myzone
+#    addresses:
+#      - 192.168.1.1
+#      - 192.168.1.2
+unbound_forward_zones: False
+unbound_forward_zones_list: []      
