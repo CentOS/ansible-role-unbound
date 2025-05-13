@@ -32,7 +32,7 @@ server:
         directory: "/etc/unbound"
         pidfile: "/var/run/unbound/unbound.pid"
         include: /etc/unbound/local.d/*.conf
-
+        chroot: ""
 
 include: /etc/unbound/conf.d/*.conf
 
